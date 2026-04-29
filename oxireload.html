@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recarga y Venta de Cilindros de Oxígeno en Colombia | OxiReload</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#03040a;
+  --neon-blue:#00f0ff;
+  --neon-pink:#ff00c8;
+  --neon-green:#00ff9f;
+  --card:#0b0f1a;
+}
+
+body{
+  margin:0;
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);
+  color:#e5e7eb;
+  overflow-x:hidden;
+}
+
+/* GRID */
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:
+    linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation:moveGrid 10s linear infinite;
+  z-index:-1;
+}
+
+@keyframes moveGrid{
+  from{transform:translateY(0);}
+  to{transform:translateY(40px);}
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+  background:#000;
+  border-bottom:1px solid var(--neon-blue);
+}
+
+.logo{
+  font-family:'Orbitron';
+  color:var(--neon-blue);
+  text-shadow:0 0 10px var(--neon-blue);
+  font-size:1.8rem;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:120px 20px;
+}
+
+/* TITULO FIX */
+.title{
+  font-family:'Orbitron';
+  font-size:clamp(2rem,6vw,3.5rem);
+  line-height:1.2;
+}
+
+.glitch-line{
+  position:relative;
+  display:block;
+  color:var(--neon-blue);
+  text-shadow:0 0 20px var(--neon-blue);
+}
+
+.glitch-line::before,
+.glitch-line::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+}
+
+.glitch-line::before{
+  color:var(--neon-pink);
+  animation:glitch1 2s infinite;
+}
+
+.glitch-line::after{
+  color:var(--neon-green);
+  animation:glitch2 3s infinite;
+}
+
+@keyframes glitch1{
+  0%{transform:translate(0);}
+  20%{transform:translate(-2px,2px);}
+  40%{transform:translate(-2px,-2px);}
+  60%{transform:translate(2px,2px);}
+  80%{transform:translate(2px,-2px);}
+  100%{transform:translate(0);}
+}
+
+@keyframes glitch2{
+  0%{transform:translate(0);}
+  25%{transform:translate(2px,-2px);}
+  50%{transform:translate(-2px,2px);}
+  75%{transform:translate(2px,2px);}
+  100%{transform:translate(0);}
+}
+
+/* BOTON */
+.btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:15px 30px;
+  background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  border-radius:10px;
+  color:#000;
+  font-weight:bold;
+  text-decoration:none;
+  box-shadow:0 0 20px var(--neon-blue);
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px var(--neon-pink);
+}
+
+/* SECTIONS */
+.section{
+  max-width:1100px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.section h2{
+  font-family:'Orbitron';
+  color:var(--neon-green);
+  text-shadow:0 0 10px var(--neon-green);
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:var(--card);
+  padding:25px;
+  border-radius:12px;
+  border:1px solid rgba(0,255,255,0.2);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--neon-blue),transparent);
+  top:0;
+  left:-100%;
+  animation:scan 3s infinite;
+}
+
+@keyframes scan{
+  0%{left:-100%;}
+  100%{left:100%;}
+}
+
+.card:hover{
+  box-shadow:0 0 25px var(--neon-blue);
+  transform:translateY(-5px);
+}
+
+/* WHATSAPP */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:linear-gradient(45deg,var(--neon-green),var(--neon-blue));
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+  color:#000;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:30px;
+  border-top:1px solid var(--neon-blue);
+}
+/* NAVBAR RESPONSIVE */
+.menu-toggle{
+  display:none;
+  font-size:28px;
+  color:var(--neon-blue);
+  cursor:pointer;
+}
+
+.nav-links{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.nav-links a{
+  color:#e5e7eb;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  color:var(--neon-blue);
+  text-shadow:0 0 10px var(--neon-blue);
+}
+
+.nav-btn{
+  padding:8px 15px;
+  border-radius:8px;
+  background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));
+  color:#000 !important;
+  font-weight:bold;
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:70px;
+    right:0;
+    background:#000;
+    flex-direction:column;
+    width:200px;
+    padding:20px;
+    border-left:1px solid var(--neon-blue);
+    display:none;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <div class="logo">OxiReload</div>
+
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#servicios">Servicios</a>
+    <a href="#digitales">Recarga</a>
+    <a href="#nosotros">Sobre Nosotros</a>
+    <a href="#terminos">Términos</a>
+    <a href="#privacidad">Privacidad</a>
+    <a href="https://wa.me/573103042537" class="nav-btn">WhatsApp</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="title">
+    <span class="glitch-line" data-text="RECARGA DE">RECARGA DE</span>
+    <span class="glitch-line" data-text="OXÍGENO">OXÍGENO</span>
+  </div>
+
+  <p>Servicio rápido | Alta presión | Máxima seguridad</p>
+
+  <div style="margin-top:25px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+
+    <a href="https://wa.me/573103042537" class="btn" style="background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));">
+      WHATSAPP
+    </a>
+
+    <a href="#servicios" class="btn" style="background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));">
+      RECARGA AHORA
+    </a>
+
+  </div>
+</section>
+
+<section class="section" id="servicios">
+  <h2>Servicios</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Recarga de cilindros</h3>
+      <p>Oxígeno medicinal e industrial.</p>
+    </div>
+
+    <div class="card">
+      <h3>Mantenimiento</h3>
+      <p>Revisión completa y control de presión.</p>
+    </div>
+
+    <div class="card">
+      <h3>Inspección técnica</h3>
+      <p>Verificación de seguridad certificada.</p>
+    </div>
+
+    <div class="card">
+      <h3>Pruebas de fuga</h3>
+      <p>Detección de fugas para máxima seguridad.</p>
+    </div>
+
+    <div class="card">
+      <h3>Venta de válvulas</h3>
+      <p>Repuestos de alta calidad para cilindros.</p>
+    </div>
+
+    <div class="card">
+      <h3>Alquiler de cilindros</h3>
+      <p>Opciones flexibles para uso temporal.</p>
+    </div>
+
+    <div class="card">
+      <h3>Entrega a domicilio</h3>
+      <p>Servicio rápido en tu ubicación.</p>
+    </div>
+
+    <div class="card">
+      <h3>Asesoría técnica</h3>
+      <p>Orientación profesional sobre uso y seguridad.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <h2>Zona de cobertura</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Bogotá</h3>
+      <p>Cl. 134 #7-83</p>
+      <p>Bogotá D.C.</p>
+    </div>
+
+    <div class="card">
+      <h3>Cali</h3>
+      <p>Cl. 24 #11 D 51</p>
+      <p>Valle del Cauca</p>
+    </div>
+
+    <div class="card">
+      <h3>Medellín</h3>
+      <p>Cra 51 B #79-30</p>
+      <p>Aranjuez, Antioquia</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="nosotros">
+  <h2>Sobre Nosotros</h2>
+
+  <div class="card">
+
+    <p>
+      <strong>OxiReload</strong> es un servicio especializado en recarga de oxígeno medicinal e industrial,
+      enfocado en brindar atención rápida, segura y confiable en Bogotá, Cali y Medellín.
+    </p>
+
+    <p>
+      Contamos con procesos de verificación técnica, mantenimiento y control de seguridad para garantizar que cada
+      cilindro cumpla con los estándares necesarios para su uso.
+    </p>
+
+    <p>
+      Nuestro objetivo es ofrecer un servicio eficiente, con atención directa por WhatsApp y cobertura en varias
+      ciudades de Colombia, facilitando el acceso al oxígeno cuando más se necesita.
+    </p>
+
+    <p>
+      Trabajamos con compromiso, responsabilidad y soporte continuo para nuestros clientes.
+    </p>
+
+  </div>
+</section>
+<section class="section">
+
+  <section class="section" id="digitales">
+  <h2>Servicios Digitales</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Recarga Nequi / PSE</h3>
+      <p>Orientación y asistencia para realizar recargas por Nequi o PSE de forma segura y rápida.</p>
+    </div>
+
+  </div>
+</section>
+<section class="section" id="terminos">
+  <h2>Términos y Condiciones</h2>
+
+  <div class="card">
+    <p><strong>1. Uso del servicio</strong><br>
+    OxiReload ofrece recarga de oxígeno bajo estándares de seguridad. El cliente es responsable del uso adecuado del cilindro.</p>
+
+    <p><strong>2. Seguridad</strong><br>
+    No se recargan cilindros en mal estado, con fugas o sin certificación técnica vigente.</p>
+
+    <p><strong>3. Responsabilidad</strong><br>
+    OxiReload no se hace responsable por daños derivados del uso incorrecto del oxígeno o manipulación indebida del cilindro.</p>
+
+    <p><strong>4. Disponibilidad</strong><br>
+    El servicio está sujeto a disponibilidad y cobertura en las zonas indicadas.</p>
+
+    <p><strong>5. Pagos</strong><br>
+    El servicio debe ser pagado en su totalidad antes o al momento de la entrega.</p>
+
+    <p><strong>6. Modificaciones</strong><br>
+    Nos reservamos el derecho de actualizar estos términos en cualquier momento.</p>
+
+    <p><strong>7. Contacto</strong><br>
+    Para dudas o soporte, contáctanos vía WhatsApp.</p>
+  </div>
+</section>
+<section class="section" id="privacidad">
+  <h2>Política de Privacidad</h2>
+
+  <div class="card">
+    <p><strong>1. Información recopilada</strong><br>
+    Recopilamos información básica como nombre, número de teléfono y detalles del servicio solicitados a través de WhatsApp u otros medios de contacto.</p>
+
+    <p><strong>2. Uso de la información</strong><br>
+    La información se utiliza únicamente para gestionar solicitudes, coordinar servicios y brindar atención al cliente.</p>
+
+    <p><strong>3. Protección de datos</strong><br>
+    Implementamos medidas de seguridad para proteger la información personal y evitar accesos no autorizados.</p>
+
+    <p><strong>4. Compartición de datos</strong><br>
+    No compartimos, vendemos ni distribuimos la información personal a terceros, salvo cuando sea requerido por ley.</p>
+
+    <p><strong>5. Cookies y tecnologías</strong><br>
+    Este sitio puede utilizar cookies básicas para mejorar la experiencia del usuario.</p>
+
+    <p><strong>6. Derechos del usuario</strong><br>
+    El usuario puede solicitar la modificación o eliminación de sus datos en cualquier momento.</p>
+
+    <p><strong>7. Cambios en la política</strong><br>
+    Nos reservamos el derecho de actualizar esta política en cualquier momento.</p>
+
+    <p><strong>8. Contacto</strong><br>
+    Para temas relacionados con privacidad, puedes comunicarte a través de WhatsApp.</p>
+  </div>
+</section>
+<div class="footer">
+
+  <p><strong>📍 Cobertura</strong></p>
+  <p>Bogotá: Cl. 134 #7-83</p>
+  <p>Cali: Cl. 24 #11 D 51, Valle del Cauca</p>
+  <p>Medellín: Cra 51 B #79-30, Aranjuez, Antioquia</p>
+
+  <br>
+
+  <p><strong>📲 WhatsApp</strong></p>
+  <p>
+    <a href="https://wa.me/573103042537" style="color:#00ff9f; text-decoration:none;">
+      +57 310 304 2537
+    </a>
+  </p>
+
+  <br>
+
+<p>© 2026 OxiReload. Recarga y venta de oxígeno en Colombia. Todos los derechos reservados.</p>
+</div>
+
+<a href="https://wa.me/573103042537" class="whatsapp">⚡</a>
+<script>
+function toggleMenu(){
+  document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
+</body>
+</html>
+
